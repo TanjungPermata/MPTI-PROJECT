@@ -36,6 +36,6 @@ return [
     | GANTI NILAI INI di file .env dengan password yang kuat!
     | Contoh .env: ADMIN_PASSWORD=P@ssw0rdKuat!2024
     */
-    'password' => env('ADMIN_PASSWORD', 'uwak'),
+    'password' => env('ADMIN_PASSWORD', '123palembang'),
 
 ];

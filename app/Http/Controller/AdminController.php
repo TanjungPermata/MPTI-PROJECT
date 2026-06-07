@@ -35,7 +35,7 @@ class AdminController extends Controller
 
         // Ambil kredensial dari konfigurasi (lihat: config/admin.php)
         $usernameBenar = config('admin.username', 'admin');
-        $passwordBenar = config('admin.password', 'uwak');
+        $passwordBenar = config('admin.password', '123palembang');
 
         if (
             $request->input('username') === $usernameBenar &&

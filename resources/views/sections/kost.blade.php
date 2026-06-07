@@ -65,7 +65,7 @@
           </div>
           <div class="avail-result" id="availResult"></div>
         </div>
-        <a href="https://wa.me/6289622022001?text=Halo%2C%20saya%20ingin%20info%20kost%20putri" target="_blank" class="wa-btn" style="margin-top:1rem">
+        <a href="https://wa.me/628127323654?text=Halo%2C%20saya%20ingin%20info%20kost%20putri" target="_blank" class="wa-btn" style="margin-top:1rem">
           💬 Tanya via WhatsApp
         </a>
       </div>

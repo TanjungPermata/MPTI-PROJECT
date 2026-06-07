@@ -309,7 +309,7 @@
         + (pakaiPanggung ? '- Panggung: 5x5 m\n' : '')
         + (jumlahMejaVal > 0 ? '- Meja: ' + namaMeja + ' x ' + jumlahMejaVal + ' pcs\n' : '')
         + '- Estimasi: ' + document.getElementById('totalPrice').textContent;
-      window.open('https://wa.me/6289622022001?text=' + encodeURIComponent(pesan), '_blank');
+      window.open('https://wa.me/628127323654?text=' + encodeURIComponent(pesan), '_blank');
     });
   }
 
