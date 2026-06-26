@@ -84,4 +84,41 @@ class PemesananController extends Controller
             'data'   => $daftar,
         ]);
     }
+
+    /**
+     * Menampilkan halaman invoice untuk pemesanan tertentu.
+     */
+    public function showInvoice($id)
+    {
+        $pemesanan = HistoryPemesanan::findOrFail($id);
+        
+        // Generate nomor invoice
+        $invoiceNo = 'INV-' . $pemesanan->tanggal_pesan->format('Ymd') . '-' . str_pad($pemesanan->id, 4, '0', STR_PAD_LEFT);
+        
+        return view('invoice', [
+            'pemesanan' => $pemesanan,
+            'invoiceNo' => $invoiceNo,
+        ]);
+    }
+
+    /**
+     * Download invoice sebagai PDF (memerlukan package barryvdh/laravel-dompdf).
+     */
+    public function downloadPDF($id)
+    {
+        $pemesanan = HistoryPemesanan::findOrFail($id);
+        $invoiceNo = 'INV-' . $pemesanan->tanggal_pesan->format('Ymd') . '-' . str_pad($pemesanan->id, 4, '0', STR_PAD_LEFT);
+
+        // Cek apakah DomPDF terinstall
+        if (!class_exists('Barryvdh\DomPDF\Facade\Pdf')) {
+            return back()->with('error', 'PDF library belum terinstall. Jalankan: composer require barryvdh/laravel-dompdf');
+        }
+
+        $pdf = \PDF::loadView('invoice-pdf', [
+            'pemesanan' => $pemesanan,
+            'invoiceNo' => $invoiceNo,
+        ]);
+
+        return $pdf->download('Invoice-' . $invoiceNo . '.pdf');
+    }
 }

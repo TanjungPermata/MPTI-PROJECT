@@ -18,10 +18,24 @@
         <p style="color:var(--muted);font-size:.9rem;line-height:1.7;margin-bottom:1.5rem">Hunian nyaman dan aman untuk perempuan di lokasi strategis Palembang. Dekat dengan kampus dan pusat kota.</p>
         <div class="price-tag">
           <span class="price-from">Mulai dari</span>
-          <span class="price-amount">Rp 12.000.000</span>
+          <span class="price-amount" id="priceDisplay">Rp 12.000.000</span>
           <span class="price-from">/ Tahun</span>
         </div>
         <div class="price-note">Booking sekarang, tersedia terbatas!</div>
+
+        {{-- Pilihan Fasilitas AC --}}
+        <div class="ac-facilities-section">
+          <div class="ac-facility-label">Pilih Fasilitas Kamar</div>
+          <div class="ac-buttons-group">
+            <button type="button" class="ac-btn ac-btn-active" data-ac="false" onclick="selectAC(false)">
+              <span class="ac-btn-text">Tanpa AC</span>
+            </button>
+            <button type="button" class="ac-btn" data-ac="true" onclick="selectAC(true)">
+              <span class="ac-btn-text">Pakai AC</span>
+              <span class="ac-btn-price">+Rp3.000.000</span>
+            </button>
+          </div>
+        </div>
         <div class="facilities-grid">
           <div class="facility-item"><span style="width:24px;display:flex;justify-content:center"><i data-lucide="wifi"></i></span> WiFi Kecepatan Tinggi</div>
           <div class="facility-item"><span style="width:24px;display:flex;justify-content:center"><i data-lucide="shield-check"></i></span> Keamanan 24 Jam &amp; CCTV</div>

@@ -410,6 +410,30 @@
     .included-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.75rem}
     .included-item{font-size:.8rem;color:var(--text)}
 
+    /* ── AC FACILITIES ── */
+    .ac-facilities-section{margin:2rem 0 1.5rem}
+    .ac-facility-label{font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:500}
+    .ac-buttons-group{display:flex;gap:1rem;flex-wrap:wrap}
+    .ac-btn{background:rgba(255,255,255,0.06);border:1.5px solid rgba(201,168,76,0.25);color:var(--text);padding:12px 20px;border-radius:8px;cursor:pointer;font-size:.9rem;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .3s ease;display:flex;flex-direction:column;align-items:center;gap:.25rem;min-width:140px}
+    .ac-btn:hover{border-color:rgba(201,168,76,0.5);background:rgba(201,168,76,0.08)}
+    .ac-btn-active{background:var(--gold);color:var(--dark);border-color:var(--gold);box-shadow:0 8px 20px rgba(201,168,76,0.3)}
+    .ac-btn-active:hover{background:var(--gold-light);box-shadow:0 10px 24px rgba(201,168,76,0.4)}
+    .ac-btn-text{display:block;font-weight:500}
+    .ac-btn-price{font-size:.75rem;opacity:0.85;font-weight:400}
+    .ac-btn-active .ac-btn-price{opacity:0.9}
+
+    /* ── INVOICE BUTTON ── */
+    .history-invoice-btn{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;margin-left:.75rem;background:rgba(201,168,76,0.15);border:1.5px solid rgba(201,168,76,0.35);border-radius:6px;color:var(--gold);font-size:.95rem;text-decoration:none;transition:all .2s ease;cursor:pointer}
+    .history-invoice-btn:hover{background:var(--gold);color:var(--dark);border-color:var(--gold);box-shadow:0 4px 12px rgba(201,168,76,0.25)}
+    .history-detail{display:flex;flex-wrap:wrap;gap:10px;font-size:.95rem;color:var(--text);line-height:1.4;margin-top:.65rem}
+    .history-detail span{display:inline-flex;align-items:center;gap:8px;vertical-align:middle;color:var(--text);}
+    .history-detail-icon{width:18px;height:18px;min-width:18px;min-height:18px;stroke:var(--gold);stroke-width:2;vertical-align:middle}
+    .history-tanggal{font-size:.92rem;color:var(--muted);display:flex;align-items:center;gap:8px;margin-bottom:.45rem}
+    .history-tanggal svg{width:18px;height:18px;min-width:18px;min-height:18px;stroke:var(--gold);stroke-width:2}
+    .history-harga{display:flex;align-items:center;justify-content:flex-end;gap:10px;margin-top:.75rem;font-size:.95rem;color:var(--text);}
+    .history-price{display:inline-flex;align-items:center;gap:8px;color:var(--text);font-weight:600}
+    .history-price svg{width:18px;height:18px;min-width:18px;min-height:18px;stroke:var(--gold);stroke-width:2}
+
     /* ── LUCIDE ICONS ── */
     .lucide{width:20px;height:20px;stroke:#C9A84C;stroke-width:2;}
 

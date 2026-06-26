@@ -1071,17 +1071,22 @@
       var html = '';
       data.data.forEach(function(item) {
         html += '<div class="history-item">';
-        html += '<div class="history-tanggal"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:4px;"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' + item.tanggal_pesan + '</div>';
+        html += '<div class="history-tanggal"><i data-lucide="calendar" class="history-detail-icon"></i>' + item.tanggal_pesan + '</div>';
         html += '<div class="history-detail">';
-        html += '<span style="display:inline-flex;align-items:center;gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7.5 4.27 9 5.15"/><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="M12 22V12"/></svg>' + item.jenis_tenda + ' × ' + item.jumlah_unit + ' unit</span>';
-        html += '<span style="display:inline-flex;align-items:center;gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.3 15.3a2.4 2.4 0 0 1 0 3.4l-2.6 2.6a2.4 2.4 0 0 1-3.4 0L2.7 8.7a2.41 2.41 0 0 1 0-3.4l2.6-2.6a2.41 2.41 0 0 1 3.4 0Z"/><path d="m14.5 12.5 2-2"/><path d="m11.5 9.5 2-2"/><path d="m8.5 6.5 2-2"/><path d="m17.5 15.5 2-2"/></svg>' + item.ukuran_tenda + '</span>';
-        if (item.warna_dekor && item.warna_dekor !== '-') html += '<span style="display:inline-flex;align-items:center;gap:4px;"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#C9A84C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="#C9A84C"/><circle cx="17.5" cy="10.5" r=".5" fill="#C9A84C"/><circle cx="8.5" cy="7.5" r=".5" fill="#C9A84C"/><circle cx="6.5" cy="12.5" r=".5" fill="#C9A84C"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>' + item.warna_dekor + '</span>';
-        if (item.jumlah_kursi > 0) html += '<span>🪑 ' + item.jenis_kursi + ' × ' + item.jumlah_kursi + '</span>';
-        if (item.pakai_panggung) html += '<span>🎪 Panggung 5×5</span>';
-        if (item.jumlah_meja > 0) html += '<span>🪞 ' + item.jenis_meja + ' × ' + item.jumlah_meja + '</span>';
-        html += '</div><div class="history-harga">' + item.estimasi_harga + '</div></div>';
+        html += '<span><i data-lucide="warehouse" class="history-detail-icon"></i>' + item.jenis_tenda + ' × ' + item.jumlah_unit + ' unit</span>';
+        html += '<span><i data-lucide="maximize-2" class="history-detail-icon"></i>' + item.ukuran_tenda + '</span>';
+        if (item.warna_dekor && item.warna_dekor !== '-') html += '<span><i data-lucide="palette" class="history-detail-icon"></i>' + item.warna_dekor + '</span>';
+        if (item.jumlah_kursi > 0) html += '<span><i data-lucide="chair" class="history-detail-icon"></i>' + item.jenis_kursi + ' × ' + item.jumlah_kursi + '</span>';
+        if (item.pakai_panggung) html += '<span><i data-lucide="layout" class="history-detail-icon"></i>Panggung 5×5</span>';
+        if (item.jumlah_meja > 0) html += '<span><i data-lucide="table" class="history-detail-icon"></i>' + item.jenis_meja + ' × ' + item.jumlah_meja + '</span>';
+        html += '</div><div class="history-harga"><span class="history-price"><i data-lucide="credit-card" class="history-detail-icon"></i>' + item.estimasi_harga + '</span>';
+        html += '<a href="/admin/invoice/' + item.id + '" class="history-invoice-btn" title="Lihat Invoice"><i data-lucide="file-text" class="history-detail-icon"></i></a>';
+        html += '</div></div>';
       });
       kontainer.innerHTML = html;
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
     })
     .catch(function() {
       kontainer.innerHTML = '<div style="text-align:center;color:#ff6b6b;padding:1rem;font-size:.85rem">Gagal memuat data.</div>';
@@ -1102,6 +1107,38 @@
   }
 
   initTheme();
+
+  // ─────────────────────────────────────────────
+  // AC FACILITIES PRICE SELECTOR
+  // ─────────────────────────────────────────────
+  var acPrices = {
+    false: 12000000,  // Tanpa AC
+    true: 15000000    // Pakai AC
+  };
+
+  function selectAC(hasAC) {
+    var buttons = document.querySelectorAll('.ac-btn');
+    buttons.forEach(function(btn) {
+      var acValue = btn.getAttribute('data-ac') === 'true';
+      if (acValue === hasAC) {
+        btn.classList.add('ac-btn-active');
+      } else {
+        btn.classList.remove('ac-btn-active');
+      }
+    });
+
+    // Update harga
+    var price = acPrices[hasAC] || acPrices[false];
+    var priceDisplay = document.getElementById('priceDisplay');
+    if (priceDisplay) {
+      priceDisplay.textContent = formatRp(price);
+    }
+  }
+
+  // Inisialisasi AC selector dengan harga default (Tanpa AC)
+  if (document.querySelector('.ac-btn')) {
+    selectAC(false);
+  }
 
   // Inisialisasi aman
   if (document.getElementById('tentType')) {

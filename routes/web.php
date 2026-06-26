@@ -45,3 +45,13 @@ Route::post('/pemesanan/simpan', [PemesananController::class, 'simpan'])
 Route::get('/admin/pemesanan', [PemesananController::class, 'daftarPemesanan'])
     ->name('admin.pemesanan')
     ->middleware('auth.admin');
+
+// Menampilkan invoice untuk pemesanan tertentu
+Route::get('/admin/invoice/{id}', [PemesananController::class, 'showInvoice'])
+    ->name('pemesanan.invoice')
+    ->middleware('auth.admin');
+
+// Download invoice sebagai PDF
+Route::get('/admin/invoice/{id}/pdf', [PemesananController::class, 'downloadPDF'])
+    ->name('pemesanan.invoice.pdf')
+    ->middleware('auth.admin');
