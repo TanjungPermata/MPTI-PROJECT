@@ -5,6 +5,7 @@ namespace App\Http\Controller;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\HistoryPemesanan;
+use Carbon\Carbon;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,23 +89,32 @@ class PemesananController extends Controller
     /**
      * Menampilkan halaman invoice untuk pemesanan tertentu.
      */
-    public function showInvoice($id)
+    public function showInvoice(Request $request, $id)
     {
         $pemesanan = HistoryPemesanan::findOrFail($id);
-        
+
         // Generate nomor invoice
         $invoiceNo = 'INV-' . $pemesanan->tanggal_pesan->format('Ymd') . '-' . str_pad($pemesanan->id, 4, '0', STR_PAD_LEFT);
-        
+
+        $profile = [
+            'nama_pemesan'       => $request->query('nama_pemesan', '-'),
+            'nomor_hp'           => $request->query('nomor_hp', '-'),
+            'alamat'             => $request->query('alamat', '-'),
+            'tanggal_pemasangan' => $this->formatDate($request->query('tanggal_pemasangan')),
+            'tanggal_selesai'    => $this->formatDate($request->query('tanggal_selesai')),
+        ];
+
         return view('invoice', [
             'pemesanan' => $pemesanan,
             'invoiceNo' => $invoiceNo,
+            'profile'   => $profile,
         ]);
     }
 
     /**
      * Download invoice sebagai PDF (memerlukan package barryvdh/laravel-dompdf).
      */
-    public function downloadPDF($id)
+    public function downloadPDF(Request $request, $id)
     {
         $pemesanan = HistoryPemesanan::findOrFail($id);
         $invoiceNo = 'INV-' . $pemesanan->tanggal_pesan->format('Ymd') . '-' . str_pad($pemesanan->id, 4, '0', STR_PAD_LEFT);
@@ -114,11 +124,47 @@ class PemesananController extends Controller
             return back()->with('error', 'PDF library belum terinstall. Jalankan: composer require barryvdh/laravel-dompdf');
         }
 
+        $profile = [
+            'nama_pemesan'       => $request->query('nama_pemesan', '-'),
+            'nomor_hp'           => $request->query('nomor_hp', '-'),
+            'alamat'             => $request->query('alamat', '-'),
+            'tanggal_pemasangan' => $this->formatDate($request->query('tanggal_pemasangan')),
+            'tanggal_selesai'    => $this->formatDate($request->query('tanggal_selesai')),
+        ];
+
         $pdf = \PDF::loadView('invoice-pdf', [
             'pemesanan' => $pemesanan,
             'invoiceNo' => $invoiceNo,
+            'profile'   => $profile,
         ]);
 
         return $pdf->download('Invoice-' . $invoiceNo . '.pdf');
+    }
+
+    /**
+     * Hapus pemesanan yang tidak jadi.
+     */
+    public function hapusPemesanan(Request $request, $id)
+    {
+        $pemesanan = HistoryPemesanan::findOrFail($id);
+        $pemesanan->delete();
+
+        return response()->json([
+            'status' => 'berhasil',
+            'pesan'  => 'Pemesanan berhasil dihapus.',
+        ]);
+    }
+
+    protected function formatDate(?string $value): string
+    {
+        if (!$value) {
+            return '-';
+        }
+
+        try {
+            return Carbon::createFromFormat('Y-m-d', $value)->format('d/m/Y');
+        } catch (\Exception $e) {
+            return '-';
+        }
     }
 }

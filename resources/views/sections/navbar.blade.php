@@ -99,7 +99,7 @@
       <div class="admin-saved-msg" id="savedMsg">✓ Perubahan berhasil disimpan!</div>
     </div>
     <div id="panelHistory" style="display:none">
-      <div class="admin-section-label">History Pemesanan Masuk</div>
+      <div class="admin-section-label">KELOLA PESANAN</div>
       <div id="historyPemesananList">
         <div style="text-align:center;color:var(--muted);padding:1rem;font-size:.85rem">Klik tab untuk memuat data...</div>
       </div>
@@ -107,5 +107,39 @@
     <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.06);text-align:right">
       <button onclick="adminLogout()" style="background:transparent;border:none;color:rgba(255,59,48,0.7);font-size:.8rem;cursor:pointer;font-family:'DM Sans',sans-serif;padding:4px 8px;border-radius:4px;transition:.2s" onmouseover="this.style.color='#ff6b6b'" onmouseout="this.style.color='rgba(255,59,48,0.7)'">Logout Admin →</button>
     </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="invoiceProfileModal" onclick="tutupModalProfil(event)" style="display:none;align-items:center;justify-content:center;">
+  <div class="modal-box" style="max-width:520px;width:100%;padding:1.5rem;position:relative;">
+    <button class="modal-close" onclick="tutupModalProfil()" style="position:absolute;top:18px;right:18px;">✕</button>
+    <div class="modal-logo">Profil Pemesan</div>
+    <div class="modal-title">Lengkapi data pembeli sebelum mencetak invoice</div>
+    <div class="modal-sub">Data pesanan akan digabung dengan profil pemesan untuk invoice cetak.</div>
+    <div class="modal-field">
+      <label class="modal-label" for="modalNamaPemesan">Nama Pemesan</label>
+      <input class="modal-input" type="text" id="modalNamaPemesan" placeholder="Masukkan nama pemesan" autocomplete="off">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label" for="modalNomorHP">Nomor HP</label>
+      <input class="modal-input" type="text" id="modalNomorHP" placeholder="Contoh: 0812xxxxxxx" autocomplete="off">
+    </div>
+    <div class="modal-field">
+      <label class="modal-label" for="modalAlamat">Alamat</label>
+      <textarea class="modal-input" id="modalAlamat" placeholder="Masukkan alamat lengkap" style="min-height:92px;resize:vertical"></textarea>
+    </div>
+    <div class="modal-field" style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+      <div>
+        <label class="modal-label" for="modalTanggalPemasangan">Tanggal Pemasangan</label>
+        <input class="modal-input" type="date" id="modalTanggalPemasangan">
+      </div>
+      <div>
+        <label class="modal-label" for="modalTanggalSelesai">Tanggal Selesai</label>
+        <input class="modal-input" type="date" id="modalTanggalSelesai">
+      </div>
+    </div>
+    <div class="modal-error" id="modalError" style="display:none;margin-bottom:.8rem;">Isian belum lengkap.</div>
+    <input type="hidden" id="modalPemesananId" value="">
+    <button class="modal-btn" onclick="cetakInvoiceApproved()">Cetak Invoice</button>
   </div>
 </div>

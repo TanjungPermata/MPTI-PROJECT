@@ -5,10 +5,28 @@
   var urlLoginAdmin      = "{{ route('admin.login') }}";
   var urlSimpanAdmin     = "{{ route('admin.simpanStatus') }}";
   var urlLogoutAdmin     = "{{ route('admin.logout') }}";
-  var urlSimpanPemesanan = "{{ route('pemesanan.simpan') }}";
-  var urlDaftarPemesanan = "{{ route('admin.pemesanan') }}";
-  var csrfToken          = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-  var dataKamar          = @json($dataKamar);
+  var urlSimpanPemesanan   = "{{ route('pemesanan.simpan') }}";
+  var urlDaftarPemesanan   = "{{ route('admin.pemesanan') }}";
+  var urlInvoiceBase       = "{{ url('/admin/invoice') }}";
+  var urlHapusPemesananBase = "{{ url('/admin/pemesanan') }}";
+  var csrfToken            = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+  var dataKamar            = @json($dataKamar);
+  var historyConfirmed     = {};
+
+  function isLightTheme() {
+    return document.body.classList.contains('light-mode');
+  }
+
+  function getButtonTextColor(bgType) {
+    var light = isLightTheme();
+    if (bgType === 'transparent') {
+      return light ? '#1a1612' : '#F9F4D3';
+    }
+    if (bgType === 'muted') {
+      return light ? '#1a1612' : '#fff';
+    }
+    return light ? '#1a1612' : '#fff';
+  }
 
   function renderThemeIcon(theme) {
     var iconContainer = document.getElementById('themeIcon');
@@ -921,7 +939,12 @@
     var p = document.getElementById('loginPass').value;
     fetch(urlLoginAdmin, {
       method: 'POST',
-      headers: { 'Content-Type':'application/json', 'X-CSRF-TOKEN':csrfToken },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken
+      },
       body: JSON.stringify({ username:u, password:p })
     })
     .then(function(res) { return res.json(); })
@@ -944,7 +967,14 @@
   }
 
   function adminLogout() {
-    fetch(urlLogoutAdmin, { method:'POST', headers:{'X-CSRF-TOKEN':csrfToken} })
+    fetch(urlLogoutAdmin, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken
+      }
+    })
     .then(function() {
         sudahLogin = false;
         localStorage.removeItem('adminLoggedIn');
@@ -1038,9 +1068,14 @@
       dataKirim[b] = { avail:dataKamar[b].tersedia, rooms:dataKamar[b].jumlah_kamar };
     });
     fetch(urlSimpanAdmin, {
-      method:'POST',
-      headers:{'Content-Type':'application/json','X-CSRF-TOKEN':csrfToken},
-      body:JSON.stringify({ data:dataKirim })
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken
+      },
+      body: JSON.stringify({ data:dataKirim })
     })
     .then(function(res) { return res.json(); })
     .then(function(data) {
@@ -1053,7 +1088,14 @@
   function muatHistoryPemesanan() {
     var kontainer = document.getElementById('historyPemesananList');
     kontainer.innerHTML = '<div style="text-align:center;color:var(--muted);padding:1rem;font-size:.85rem">Memuat data...</div>';
-    fetch(urlDaftarPemesanan, { headers:{'X-CSRF-TOKEN':csrfToken} })
+    fetch(urlDaftarPemesanan, {
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken
+      }
+    })
     .then(function(res) {
       if (res.status === 403 || res.status === 401) {
         localStorage.removeItem('adminLoggedIn');
@@ -1070,6 +1112,15 @@
       }
       var html = '';
       data.data.forEach(function(item) {
+        var confirmed = !!historyConfirmed[item.id];
+        var themeLight = isLightTheme();
+        var confirmColor = confirmed ? (themeLight ? '#1a1612' : '#F8E7B5') : (themeLight ? '#1a1612' : '#F9F4D3');
+        var confirmBg = confirmed ? (themeLight ? 'rgba(201,168,76,.22)' : 'rgba(201,168,76,.16)') : 'transparent';
+        var printBg = themeLight ? 'rgba(26,26,26,.08)' : 'rgba(255,255,255,.08)';
+        var printColor = themeLight ? '#1a1612' : '#fff';
+        var deleteBg = themeLight ? 'rgba(26,26,26,.08)' : 'rgba(255,255,255,.08)';
+        var deleteColor = themeLight ? '#1a1612' : '#fff';
+
         html += '<div class="history-item">';
         html += '<div class="history-tanggal"><i data-lucide="calendar" class="history-detail-icon"></i>' + item.tanggal_pesan + '</div>';
         html += '<div class="history-detail">';
@@ -1079,8 +1130,18 @@
         if (item.jumlah_kursi > 0) html += '<span><i data-lucide="chair" class="history-detail-icon"></i>' + item.jenis_kursi + ' × ' + item.jumlah_kursi + '</span>';
         if (item.pakai_panggung) html += '<span><i data-lucide="layout" class="history-detail-icon"></i>Panggung 5×5</span>';
         if (item.jumlah_meja > 0) html += '<span><i data-lucide="table" class="history-detail-icon"></i>' + item.jenis_meja + ' × ' + item.jumlah_meja + '</span>';
-        html += '</div><div class="history-harga"><span class="history-price"><i data-lucide="credit-card" class="history-detail-icon"></i>' + item.estimasi_harga + '</span>';
-        html += '<a href="/admin/invoice/' + item.id + '" class="history-invoice-btn" title="Lihat Invoice"><i data-lucide="file-text" class="history-detail-icon"></i></a>';
+        html += '</div><div class="history-harga" style="display:flex;flex-direction:column;gap:.5rem;width:100%;">';
+        html += '<div style="display:flex;gap:.5rem;width:100%;">';
+        html += '<button id="confirmBtn_' + item.id + '" onclick="konfirmasiPesanan(' + item.id + ')" style="flex:1;min-width:0;border:1px solid rgba(201,168,76,.45);display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:.35rem .75rem;border-radius:10px;font-size:.78rem;cursor:pointer;background:' + confirmBg + ';color:' + confirmColor + ';text-transform:none;">';
+        html += '<i data-lucide="check" class="history-detail-icon" style="width:14px;height:14px;color:' + confirmColor + ';"></i>' + (confirmed ? 'Terkonfirmasi' : 'Konfirmasi') + '</button>';
+        html += '<button id="printBtn_' + item.id + '" onclick="bukaInvoiceModal(' + item.id + ')" style="flex:1;min-width:0;display:' + (confirmed ? 'inline-flex' : 'none') + ';border:1px solid rgba(201,168,76,.35);align-items:center;justify-content:center;gap:5px;padding:.35rem .75rem;border-radius:10px;font-size:.78rem;cursor:pointer;background:' + printBg + ';color:' + printColor + ';text-transform:none;">';
+        html += '<i data-lucide="printer" class="history-detail-icon" style="width:14px;height:14px;color:' + printColor + ';"></i>Cetak</button>';
+        html += '</div>';
+        html += '<button id="deleteBtn_' + item.id + '" onclick="hapusPemesanan(' + item.id + ')" style="border:1px solid rgba(201,168,76,.25);display:' + (confirmed ? 'none' : 'inline-flex') + ';align-items:center;justify-content:center;gap:5px;padding:.35rem .75rem;border-radius:10px;font-size:.78rem;cursor:pointer;background:' + deleteBg + ';color:' + deleteColor + ';width:100%;text-transform:none;">';
+        html += '<i data-lucide="trash" class="history-detail-icon" style="width:14px;height:14px;color:' + deleteColor + ';"></i>Hapus</button>';
+        html += '<div id="warning_' + item.id + '" style="display:none;color:#FACC15;font-size:.82rem;margin-top:.25rem"></div>';
+        html += '<span class="history-price" style="font-weight:600;color:#fff;background:#3E2723;padding:.45rem .7rem;border-radius:12px;display:inline-flex;align-items:center;gap:6px;width:100%;justify-content:flex-start;">';
+        html += '<i data-lucide="credit-card" class="history-detail-icon" style="width:14px;height:14px"></i>' + item.estimasi_harga + '</span>';
         html += '</div></div>';
       });
       kontainer.innerHTML = html;
@@ -1090,6 +1151,132 @@
     })
     .catch(function() {
       kontainer.innerHTML = '<div style="text-align:center;color:#ff6b6b;padding:1rem;font-size:.85rem">Gagal memuat data.</div>';
+    });
+  }
+
+  function konfirmasiPesanan(id) {
+    historyConfirmed[id] = true;
+    var btn = document.getElementById('confirmBtn_' + id);
+    var printBtn = document.getElementById('printBtn_' + id);
+    var deleteBtn = document.getElementById('deleteBtn_' + id);
+    var warning = document.getElementById('warning_' + id);
+    var themeLight = isLightTheme();
+    var confirmColor = themeLight ? '#1a1612' : '#F8E7B5';
+    var confirmBg = themeLight ? 'rgba(201,168,76,.22)' : 'rgba(201,168,76,.16)';
+    var printColor = themeLight ? '#1a1612' : '#fff';
+    var printBg = themeLight ? 'rgba(26,26,26,.08)' : 'rgba(255,255,255,.08)';
+
+    if (btn) {
+      btn.innerHTML = '<i data-lucide="check" class="history-detail-icon" style="width:14px;height:14px;color:' + confirmColor + ';"></i>Terkonfirmasi';
+      btn.style.background = confirmBg;
+      btn.style.borderColor = 'rgba(201,168,76,.45)';
+      btn.style.color = confirmColor;
+      btn.style.cursor = 'default';
+      btn.style.opacity = '1';
+      btn.disabled = true;
+      btn.style.pointerEvents = 'none';
+    }
+    if (printBtn) {
+      printBtn.style.display = 'inline-flex';
+      printBtn.style.background = printBg;
+      printBtn.style.color = printColor;
+      var printIcon = printBtn.querySelector('i');
+      if (printIcon) printIcon.style.color = printColor;
+    }
+    if (deleteBtn) {
+      deleteBtn.style.display = 'none';
+    }
+    if (warning) {
+      warning.style.display = 'block';
+      warning.innerText = 'Pesanan terkonfirmasi. Tekan Cetak untuk membuat invoice.';
+    }
+  }
+
+  function bukaInvoiceModal(id) {
+    if (!historyConfirmed[id]) {
+      return showHistoryWarning(id, 'Konfirmasi pesanan terlebih dahulu.');
+    }
+
+    var modal = document.getElementById('invoiceProfileModal');
+    if (!modal) return;
+
+    document.getElementById('modalPemesananId').value = id;
+    document.getElementById('modalNamaPemesan').value = '';
+    document.getElementById('modalNomorHP').value = '';
+    document.getElementById('modalAlamat').value = '';
+    document.getElementById('modalTanggalPemasangan').value = '';
+    document.getElementById('modalTanggalSelesai').value = '';
+    document.getElementById('modalError').style.display = 'none';
+    modal.style.display = 'flex';
+  }
+
+  function tutupModalProfil(e) {
+    if (!e || e.target === document.getElementById('invoiceProfileModal')) {
+      document.getElementById('invoiceProfileModal').style.display = 'none';
+    }
+  }
+
+  function showHistoryWarning(id, message) {
+    var el = document.getElementById('warning_' + id);
+    if (!el) return;
+    el.textContent = message;
+    el.style.display = 'block';
+    setTimeout(function() { el.style.display = 'none'; }, 3000);
+  }
+
+  function cetakInvoiceApproved() {
+    var id = document.getElementById('modalPemesananId').value;
+    var nama = document.getElementById('modalNamaPemesan').value.trim();
+    var hp = document.getElementById('modalNomorHP').value.trim();
+    var alamat = document.getElementById('modalAlamat').value.trim();
+    var pemasangan = document.getElementById('modalTanggalPemasangan').value;
+    var selesai = document.getElementById('modalTanggalSelesai').value;
+    var err = document.getElementById('modalError');
+
+    if (!nama || !hp || !alamat || !pemasangan || !selesai) {
+      err.textContent = 'Semua field harus diisi terlebih dahulu.';
+      err.style.display = 'block';
+      return;
+    }
+
+    if (new Date(selesai) < new Date(pemasangan)) {
+      err.textContent = 'Tanggal selesai tidak boleh lebih awal dari tanggal pemasangan.';
+      err.style.display = 'block';
+      return;
+    }
+
+    err.style.display = 'none';
+    var query = 'nama_pemesan=' + encodeURIComponent(nama)
+      + '&nomor_hp=' + encodeURIComponent(hp)
+      + '&alamat=' + encodeURIComponent(alamat)
+      + '&tanggal_pemasangan=' + encodeURIComponent(pemasangan)
+      + '&tanggal_selesai=' + encodeURIComponent(selesai);
+
+    window.location.href = urlInvoiceBase + '/' + id + '?' + query;
+  }
+
+  function hapusPemesanan(id) {
+    if (!confirm('Hapus pemesanan ini? Tindakan ini tidak bisa dibatalkan.')) return;
+
+    fetch(urlHapusPemesananBase + '/' + id, {
+      method: 'DELETE',
+      credentials: 'same-origin',
+      headers: {
+        'Accept': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': csrfToken
+      }
+    })
+    .then(function(res) { return res.json(); })
+    .then(function(data) {
+      if (data.status === 'berhasil') {
+        muatHistoryPemesanan();
+      } else {
+        showHistoryWarning(id, data.pesan || 'Gagal menghapus pemesanan.');
+      }
+    })
+    .catch(function() {
+      showHistoryWarning(id, 'Gagal menghapus data.');
     });
   }
 

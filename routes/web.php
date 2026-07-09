@@ -51,6 +51,11 @@ Route::get('/admin/invoice/{id}', [PemesananController::class, 'showInvoice'])
     ->name('pemesanan.invoice')
     ->middleware('auth.admin');
 
+// Hapus pemesanan yang tidak jadi
+Route::delete('/admin/pemesanan/{id}', [PemesananController::class, 'hapusPemesanan'])
+    ->name('admin.pemesanan.hapus')
+    ->middleware('auth.admin');
+
 // Download invoice sebagai PDF
 Route::get('/admin/invoice/{id}/pdf', [PemesananController::class, 'downloadPDF'])
     ->name('pemesanan.invoice.pdf')

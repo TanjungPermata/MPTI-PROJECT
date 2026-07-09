@@ -395,7 +395,7 @@
       <button class="btn btn-print" onclick="window.print()">
         Print Invoice
       </button>
-      <a href="{{ route('pemesanan.invoice.pdf', $pemesanan->id) }}" class="btn btn-pdf">
+      <a href="{{ route('pemesanan.invoice.pdf', $pemesanan->id) }}?nama_pemesan={{ urlencode($profile['nama_pemesan']) }}&nomor_hp={{ urlencode($profile['nomor_hp']) }}&alamat={{ urlencode($profile['alamat']) }}&tanggal_pemasangan={{ urlencode(request()->query('tanggal_pemasangan', '')) }}&tanggal_selesai={{ urlencode(request()->query('tanggal_selesai', '')) }}" class="btn btn-pdf">
         Download PDF
       </a>
       <button class="btn btn-back" onclick="history.back()">
@@ -431,6 +431,30 @@
     {{-- Detail Pemesanan --}}
     <div class="details-grid">
       <div class="detail-section">
+        <h3>Profil Pemesan</h3>
+        <div class="detail-row">
+          <span class="label">Nama Pemesan</span>
+          <span class="value">{{ $profile['nama_pemesan'] }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Nomor HP</span>
+          <span class="value">{{ $profile['nomor_hp'] }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Alamat</span>
+          <span class="value">{{ $profile['alamat'] }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Tanggal Pemasangan</span>
+          <span class="value">{{ $profile['tanggal_pemasangan'] }}</span>
+        </div>
+        <div class="detail-row">
+          <span class="label">Tanggal Selesai</span>
+          <span class="value">{{ $profile['tanggal_selesai'] }}</span>
+        </div>
+      </div>
+
+      <div class="detail-section">
         <h3>Detail Pesanan</h3>
         <div class="detail-row">
           <span class="label">Jenis Tenda</span>
@@ -447,22 +471,6 @@
         <div class="detail-row">
           <span class="label">Warna Dekor</span>
           <span class="value">{{ $pemesanan->warna_dekor }}</span>
-        </div>
-      </div>
-
-      <div class="detail-section">
-        <h3>Fasilitas Tambahan</h3>
-        <div class="detail-row">
-          <span class="label">Kursi</span>
-          <span class="value">{{ $pemesanan->jenis_kursi }} ({{ $pemesanan->jumlah_kursi }} pcs)</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">Panggung</span>
-          <span class="value">{{ $pemesanan->pakai_panggung ? '✓ Pakai' : '✗ Tidak' }}</span>
-        </div>
-        <div class="detail-row">
-          <span class="label">Meja</span>
-          <span class="value">{{ $pemesanan->jenis_meja ? $pemesanan->jenis_meja . ' (' . $pemesanan->jumlah_meja . ' pcs)' : '✗ Tidak' }}</span>
         </div>
         <div class="detail-row">
           <span class="label">Tanggal Pesan</span>
