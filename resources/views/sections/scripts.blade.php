@@ -7,7 +7,7 @@
   var urlLogoutAdmin     = "{{ route('admin.logout') }}";
   var urlSimpanPemesanan   = "{{ route('pemesanan.simpan') }}";
   var urlDaftarPemesanan   = "{{ route('admin.pemesanan') }}";
-  var urlInvoiceBase       = "{{ url('/admin/invoice') }}";
+  var urlInvoiceBase       = "{{ url('/admin/kwitansi') }}";
   var urlHapusPemesananBase = "{{ url('/admin/pemesanan') }}";
   var csrfToken            = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
   var dataKamar            = @json($dataKamar);
@@ -256,7 +256,7 @@
       baris += '<div class="breakdown-item"><span class="item-label">' + labelMeja[tipeMeja] + ' × ' + meja + ' pcs</span><span class="item-val">' + formatRp(totalMeja) + '</span></div>';
     }
     baris += '<div style="border-top:1px solid rgba(201,168,76,0.2);margin:1rem 0;"></div>';
-    baris += '<div class="breakdown-item total" style="font-size:1.1rem;font-weight:bold;padding-top:.5rem;"><span class="item-label">Total Estimasi</span><span class="item-val">' + formatRp(total) + '</span></div>';
+    baris += '<div class="breakdown-item total" style="font-size:1.1rem;font-weight:bold;padding-top:.5rem;"><span class="item-label">Total Biaya</span><span class="item-val">' + formatRp(total) + '</span></div>';
     
     var bd = document.getElementById('breakdown');
     if (bd) bd.innerHTML = baris;
@@ -326,7 +326,7 @@
         + (jumlahKursiVal > 0 ? '- Kursi: ' + namaKursi + ' x ' + jumlahKursiVal + ' pcs\n' : '')
         + (pakaiPanggung ? '- Panggung: 5x5 m\n' : '')
         + (jumlahMejaVal > 0 ? '- Meja: ' + namaMeja + ' x ' + jumlahMejaVal + ' pcs\n' : '')
-        + '- Estimasi: ' + document.getElementById('totalPrice').textContent;
+        + '- Biaya: ' + document.getElementById('totalPrice').textContent;
       window.open('https://wa.me/628127323654?text=' + encodeURIComponent(pesan), '_blank');
     });
   }
@@ -1188,7 +1188,7 @@
     }
     if (warning) {
       warning.style.display = 'block';
-      warning.innerText = 'Pesanan terkonfirmasi. Tekan Cetak untuk membuat invoice.';
+      warning.innerText = 'Pesanan terkonfirmasi. Tekan Cetak untuk membuat kwitansi.';
     }
   }
 

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Invoice {{ $invoiceNo }}</title>
+  <title>Kwitansi {{ $invoiceNo }}</title>
   
   <style>
     * {
@@ -393,9 +393,9 @@
     {{-- Tombol Action --}}
     <div class="buttons">
       <button class="btn btn-print" onclick="window.print()">
-        Print Invoice
+        Print Kwitansi
       </button>
-      <a href="{{ route('pemesanan.invoice.pdf', $pemesanan->id) }}?nama_pemesan={{ urlencode($profile['nama_pemesan']) }}&nomor_hp={{ urlencode($profile['nomor_hp']) }}&alamat={{ urlencode($profile['alamat']) }}&tanggal_pemasangan={{ urlencode(request()->query('tanggal_pemasangan', '')) }}&tanggal_selesai={{ urlencode(request()->query('tanggal_selesai', '')) }}" class="btn btn-pdf">
+      <a href="{{ route('pemesanan.kwitansi.pdf', $pemesanan->id) }}?nama_pemesan={{ urlencode($profile['nama_pemesan']) }}&nomor_hp={{ urlencode($profile['nomor_hp']) }}&alamat={{ urlencode($profile['alamat']) }}&tanggal_pemasangan={{ urlencode(request()->query('tanggal_pemasangan', '')) }}&tanggal_selesai={{ urlencode(request()->query('tanggal_selesai', '')) }}" class="btn btn-pdf">
         Download PDF
       </a>
       <button class="btn btn-back" onclick="history.back()">
@@ -412,7 +412,7 @@
       </div>
       <div class="invoice-meta">
         <div class="meta-item">
-          <span class="meta-label">No. Invoice:</span><br>
+          <span class="meta-label">No. Kwitansi:</span><br>
           <span class="meta-value" style="font-size: 14px;">{{ $invoiceNo }}</span>
         </div>
         <div class="meta-item" style="margin-top: 15px;">
@@ -424,8 +424,8 @@
 
     {{-- Invoice Title --}}
     <div class="invoice-title">
-      <h1>INVOICE PENYEWAAN GURAU TENDA</h1>
-      <p>Riwayat Pemesanan & Estimasi Biaya</p>
+      <h1>KWITANSI PENYEWAAN GURAU TENDA</h1>
+      <p>Riwayat Pemesanan & Biaya</p>
     </div>
 
     {{-- Detail Pemesanan --}}
@@ -531,7 +531,7 @@
       <div class="notes">
         <h4>Catatan Penting</h4>
         <p>
-          Invoice ini merupakan estimasi biaya berdasarkan pesanan yang diterima. 
+          Kwitansi ini menunjukkan biaya berdasarkan pesanan yang diterima. 
           Biaya final dapat berubah tergantung kondisi lapangan dan permintaan khusus. 
           Harap hubungi Gurau Tenda untuk konfirmasi biaya sebelum pemesanan difinalisasi.
         </p>
@@ -546,7 +546,7 @@
           <span class="value">{{ $pemesanan->estimasi_harga_format }}</span>
         </div>
         <div class="price-row total">
-          <span class="label">TOTAL ESTIMASI</span>
+          <span class="label">TOTAL BIAYA</span>
           <span class="value">{{ $pemesanan->estimasi_harga_format }}</span>
         </div>
       </div>

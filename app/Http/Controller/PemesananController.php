@@ -87,13 +87,13 @@ class PemesananController extends Controller
     }
 
     /**
-     * Menampilkan halaman invoice untuk pemesanan tertentu.
+     * Menampilkan halaman kwitansi untuk pemesanan tertentu.
      */
     public function showInvoice(Request $request, $id)
     {
         $pemesanan = HistoryPemesanan::findOrFail($id);
 
-        // Generate nomor invoice
+        // Generate nomor kwitansi
         $invoiceNo = 'INV-' . $pemesanan->tanggal_pesan->format('Ymd') . '-' . str_pad($pemesanan->id, 4, '0', STR_PAD_LEFT);
 
         $profile = [
@@ -112,7 +112,7 @@ class PemesananController extends Controller
     }
 
     /**
-     * Download invoice sebagai PDF (memerlukan package barryvdh/laravel-dompdf).
+     * Download kwitansi sebagai PDF (memerlukan package barryvdh/laravel-dompdf).
      */
     public function downloadPDF(Request $request, $id)
     {
@@ -138,7 +138,7 @@ class PemesananController extends Controller
             'profile'   => $profile,
         ]);
 
-        return $pdf->download('Invoice-' . $invoiceNo . '.pdf');
+        return $pdf->download('Kwitansi-' . $invoiceNo . '.pdf');
     }
 
     /**

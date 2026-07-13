@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Invoice {{ $invoiceNo }}</title>
+  <title>Kwitansi {{ $invoiceNo }}</title>
   
   <style>
     * {
@@ -279,7 +279,7 @@
       </div>
       <div class="invoice-meta">
         <div class="meta-item">
-          <span class="meta-label">No. Invoice:</span><br>
+          <span class="meta-label">No. Kwitansi:</span><br>
           <span class="meta-value" style="font-size: 12px;">{{ $invoiceNo }}</span>
         </div>
         <div class="meta-item" style="margin-top: 10px;">
@@ -291,8 +291,8 @@
 
     {{-- Invoice Title --}}
     <div class="invoice-title">
-      <h1>INVOICE PENYEWAAN GURAU TENDA</h1>
-      <p>Riwayat Pemesanan & Estimasi Biaya</p>
+      <h1>KWITANSI PENYEWAAN GURAU TENDA</h1>
+      <p>Riwayat Pemesanan & Biaya</p>
     </div>
 
     {{-- Detail Pemesanan --}}
@@ -301,23 +301,23 @@
         <div class="detail-section">
           <h3>Profil Pemesan</h3>
           <div class="detail-row">
-            <span class="label">Nama Pemesan</span>
+            <span class="label">Nama Pemesan :</span>
             <span class="value">{{ $profile['nama_pemesan'] }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Nomor HP</span>
+            <span class="label">Nomor HP :</span>
             <span class="value">{{ $profile['nomor_hp'] }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Alamat</span>
+            <span class="label">Alamat :</span>
             <span class="value">{{ $profile['alamat'] }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Tanggal Pemasangan</span>
+            <span class="label">Tanggal Pemasangan :</span>
             <span class="value">{{ $profile['tanggal_pemasangan'] }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Tanggal Selesai</span>
+            <span class="label">Tanggal Selesai :</span>
             <span class="value">{{ $profile['tanggal_selesai'] }}</span>
           </div>
         </div>
@@ -327,23 +327,23 @@
         <div class="detail-section">
           <h3>Detail Pesanan</h3>
           <div class="detail-row">
-            <span class="label">Jenis Tenda</span>
+            <span class="label">Jenis Tenda :</span>
             <span class="value">{{ $pemesanan->jenis_tenda }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Jumlah Unit</span>
+            <span class="label">Jumlah Unit :</span>
             <span class="value">{{ $pemesanan->jumlah_unit }} unit</span>
           </div>
           <div class="detail-row">
-            <span class="label">Ukuran Tenda</span>
+            <span class="label">Ukuran Tenda :</span>
             <span class="value">{{ $pemesanan->ukuran_tenda }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Warna Dekor</span>
+            <span class="label">Warna Dekor :</span>
             <span class="value">{{ $pemesanan->warna_dekor }}</span>
           </div>
           <div class="detail-row">
-            <span class="label">Tanggal Pesan</span>
+            <span class="label">Tanggal Pesan :</span>
             <span class="value">{{ $pemesanan->tanggal_pesan->format('d/m/Y') }}</span>
           </div>
         </div>
@@ -403,7 +403,7 @@
         <div class="notes">
           <h4>Catatan Penting</h4>
           <p>
-            Invoice ini merupakan estimasi biaya berdasarkan pesanan yang diterima. 
+            Kwitansi ini menunjukkan biaya berdasarkan pesanan yang diterima. 
             Biaya final dapat berubah tergantung kondisi lapangan dan permintaan khusus. 
             Harap hubungi Gurau Tenda untuk konfirmasi biaya sebelum pemesanan difinalisasi.
           </p>
@@ -420,7 +420,7 @@
             <span class="value">{{ $pemesanan->estimasi_harga_format }}</span>
           </div>
           <div class="price-row total">
-            <span class="label">TOTAL ESTIMASI</span>
+            <span class="label">TOTAL BIAYA</span>
             <span class="value">{{ $pemesanan->estimasi_harga_format }}</span>
           </div>
         </div>

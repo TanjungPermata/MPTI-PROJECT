@@ -46,9 +46,9 @@ Route::get('/admin/pemesanan', [PemesananController::class, 'daftarPemesanan'])
     ->name('admin.pemesanan')
     ->middleware('auth.admin');
 
-// Menampilkan invoice untuk pemesanan tertentu
-Route::get('/admin/invoice/{id}', [PemesananController::class, 'showInvoice'])
-    ->name('pemesanan.invoice')
+// Menampilkan kwitansi untuk pemesanan tertentu
+Route::get('/admin/kwitansi/{id}', [PemesananController::class, 'showInvoice'])
+    ->name('pemesanan.kwitansi')
     ->middleware('auth.admin');
 
 // Hapus pemesanan yang tidak jadi
@@ -56,7 +56,7 @@ Route::delete('/admin/pemesanan/{id}', [PemesananController::class, 'hapusPemesa
     ->name('admin.pemesanan.hapus')
     ->middleware('auth.admin');
 
-// Download invoice sebagai PDF
-Route::get('/admin/invoice/{id}/pdf', [PemesananController::class, 'downloadPDF'])
-    ->name('pemesanan.invoice.pdf')
+// Download kwitansi sebagai PDF
+Route::get('/admin/kwitansi/{id}/pdf', [PemesananController::class, 'downloadPDF'])
+    ->name('pemesanan.kwitansi.pdf')
     ->middleware('auth.admin');

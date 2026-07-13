@@ -114,8 +114,8 @@
   <div class="modal-box" style="max-width:520px;width:100%;padding:1.5rem;position:relative;">
     <button class="modal-close" onclick="tutupModalProfil()" style="position:absolute;top:18px;right:18px;">✕</button>
     <div class="modal-logo">Profil Pemesan</div>
-    <div class="modal-title">Lengkapi data pembeli sebelum mencetak invoice</div>
-    <div class="modal-sub">Data pesanan akan digabung dengan profil pemesan untuk invoice cetak.</div>
+    <div class="modal-title">Lengkapi data pembeli sebelum mencetak kwitansi</div>
+    <div class="modal-sub">Data pesanan akan digabung dengan profil pemesan untuk kwitansi cetak.</div>
     <div class="modal-field">
       <label class="modal-label" for="modalNamaPemesan">Nama Pemesan</label>
       <input class="modal-input" type="text" id="modalNamaPemesan" placeholder="Masukkan nama pemesan" autocomplete="off">
@@ -140,6 +140,6 @@
     </div>
     <div class="modal-error" id="modalError" style="display:none;margin-bottom:.8rem;">Isian belum lengkap.</div>
     <input type="hidden" id="modalPemesananId" value="">
-    <button class="modal-btn" onclick="cetakInvoiceApproved()">Cetak Invoice</button>
+    <button class="modal-btn" onclick="cetakInvoiceApproved()">Cetak Kwitansi</button>
   </div>
 </div>
