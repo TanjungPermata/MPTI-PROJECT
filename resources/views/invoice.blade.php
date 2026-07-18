@@ -257,6 +257,37 @@
       margin-bottom: 5px;
     }
 
+    .signature-section {
+      margin: 40px 0 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .signature-box {
+      width: 240px;
+      text-align: center;
+      padding-top: 12px;
+    }
+
+    .signature-box p {
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 11px;
+    }
+
+    .signature-image {
+      display: block;
+      max-width: 100%;
+      max-height: 120px;
+      height: auto;
+      margin: 0 auto 8px;
+    }
+
+    .signature-name {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
     .buttons {
       display: flex;
       gap: 10px;
@@ -357,7 +388,7 @@
 
       .container {
         box-shadow: none;
-        padding: 0;
+        padding: 15px;
         max-width: 100%;
       }
 
@@ -370,16 +401,51 @@
         display: none !important;
       }
 
-      .invoice-header {
+      .invoice-header,
+      .details-grid,
+      .items-table,
+      .summary-section,
+      .signature-section,
+      .footer {
+        page-break-inside: avoid;
         page-break-after: avoid;
       }
 
+      .invoice-header {
+        margin-bottom: 20px;
+      }
+
+      .details-grid {
+        gap: 15px;
+      }
+
       .items-table {
-        page-break-inside: avoid;
+        margin-bottom: 15px;
+      }
+
+      .items-table th,
+      .items-table td {
+        padding: 6px;
       }
 
       .price-summary {
         page-break-inside: avoid;
+      }
+
+      .signature-section {
+        margin: 20px 0 10px;
+      }
+
+      .footer {
+        margin-top: 15px;
+        padding-top: 10px;
+      }
+
+      .signature-section,
+      .signature-box,
+      .signature-image {
+        display: block !important;
+        visibility: visible !important;
       }
 
       * {
@@ -549,6 +615,25 @@
           <span class="label">TOTAL BIAYA</span>
           <span class="value">{{ $pemesanan->estimasi_harga_format }}</span>
         </div>
+      </div>
+    </div>
+
+    @php
+      $signaturePath = public_path('images/signature-owner.png');
+      $signatureData = file_exists($signaturePath)
+        ? 'data:' . mime_content_type($signaturePath) . ';base64,' . base64_encode(file_get_contents($signaturePath))
+        : null;
+    @endphp
+
+    <div class="signature-section">
+      <div class="signature-box">
+        <p>Tanda Tangan Pemilik</p>
+        @if($signatureData)
+          <img src="{{ $signatureData }}" alt="Tanda Tangan Pemilik" class="signature-image" />
+        @else
+          <img src="{{ asset('images/signature-owner.png') }}" alt="Tanda Tangan Pemilik" class="signature-image" />
+        @endif
+        <p class="signature-name">Gurau Tenda</p>
       </div>
     </div>
 

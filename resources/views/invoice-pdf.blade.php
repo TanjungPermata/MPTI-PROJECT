@@ -20,7 +20,7 @@
     .container {
       max-width: 210mm;
       margin: 0 auto;
-      padding: 20mm;
+      padding: 15mm;
       background: white;
     }
 
@@ -28,9 +28,9 @@
       display: flex;
       justify-content: space-between;
       align-items: flex-start;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
       border-bottom: 2px solid #C9A84C;
-      padding-bottom: 15px;
+      padding-bottom: 12px;
     }
 
     .company-info h1 {
@@ -93,12 +93,12 @@
     .details-grid {
       display: table;
       width: 100%;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
     }
 
     .detail-col {
       display: table-cell;
-      padding: 15px;
+      padding: 12px;
       background: #f9f9f9;
       border: 1px solid #e5e5e5;
       width: 50%;
@@ -139,7 +139,7 @@
 
     .items-table {
       width: 100%;
-      margin-bottom: 25px;
+      margin-bottom: 18px;
       border-collapse: collapse;
     }
 
@@ -178,8 +178,8 @@
     .summary-section {
       display: table;
       width: 100%;
-      margin-bottom: 20px;
-      border-spacing: 20px;
+      margin-bottom: 15px;
+      border-spacing: 15px;
     }
 
     .notes-col {
@@ -251,8 +251,8 @@
 
     .footer {
       border-top: 1px solid #e5e5e5;
-      margin-top: 25px;
-      padding-top: 15px;
+      margin-top: 15px;
+      padding-top: 10px;
       text-align: center;
       font-size: 9px;
       color: #999;
@@ -262,9 +262,40 @@
       margin-bottom: 3px;
     }
 
+    .signature-section {
+      margin: 30px 0 15px;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .signature-box {
+      width: 200px;
+      text-align: center;
+      padding-top: 10px;
+    }
+
+    .signature-box p {
+      margin-bottom: 6px;
+      color: #333;
+      font-size: 9px;
+    }
+
+    .signature-image {
+      display: block;
+      max-width: 100%;
+      max-height: 100px;
+      height: auto;
+      margin: 0 auto 6px;
+    }
+
+    .signature-name {
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
     @page {
       size: A4;
-      margin: 20mm;
+      margin: 15mm;
     }
   </style>
 </head>
@@ -424,6 +455,25 @@
             <span class="value">{{ $pemesanan->estimasi_harga_format }}</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    @php
+      $signaturePath = public_path('images/signature-owner.png');
+      $signatureData = file_exists($signaturePath)
+        ? 'data:' . mime_content_type($signaturePath) . ';base64,' . base64_encode(file_get_contents($signaturePath))
+        : null;
+    @endphp
+
+    <div class="signature-section">
+      <div class="signature-box">
+        <p>Tanda Tangan Pemilik</p>
+        @if($signatureData)
+          <img src="{{ $signatureData }}" alt="Tanda Tangan Pemilik" class="signature-image" />
+        @else
+          <img src="{{ asset('images/signature-owner.png') }}" alt="Tanda Tangan Pemilik" class="signature-image" />
+        @endif
+        <p class="signature-name">Gurau Tenda</p>
       </div>
     </div>
 
