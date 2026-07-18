@@ -2,6 +2,8 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/png">
   <title>Kwitansi {{ $invoiceNo }}</title>
   
   <style>

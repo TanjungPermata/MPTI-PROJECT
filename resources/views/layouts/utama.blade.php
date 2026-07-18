@@ -11,6 +11,9 @@
   {{-- ─── CSRF Token: wajib ada untuk request POST via JavaScript ───── --}}
   <meta name="csrf-token" content="{{ csrf_token() }}">
 
+  <link rel="icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+  <link rel="shortcut icon" href="{{ asset('images/favicon.png') }}" type="image/png">
+
   {{-- ─── Google Fonts ───────────────────────────────────────────────── --}}
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
