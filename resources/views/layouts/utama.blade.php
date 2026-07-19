@@ -175,7 +175,9 @@
     .form-row{margin-bottom:1.25rem}
     .form-label{display:block;font-size:.8rem;letter-spacing:.5px;color:var(--muted);margin-bottom:.5rem;text-transform:uppercase}
     .form-select,.form-input{width:100%;background:var(--input-bg);border:1px solid var(--input-border);color:var(--text);padding:10px 14px;border-radius:6px;font-size:.9rem;font-family:'DM Sans',sans-serif;outline:none;transition:border .2s;-webkit-appearance:none;appearance:none}
+    .calculator-section .form-select{padding-right:42px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;background-size:14px 14px}
     .form-select:focus,.form-input:focus{border-color:var(--gold)}
+    .form-select::-ms-expand{display:none}
     .qty-row{display:flex;align-items:center;gap:12px}
     .qty-btn{width:34px;height:34px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1);color:var(--text);border-radius:6px;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}
     .qty-btn:hover{background:rgba(201,168,76,0.2);border-color:var(--gold);color:var(--gold)}
