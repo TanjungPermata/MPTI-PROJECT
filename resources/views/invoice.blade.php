@@ -629,7 +629,6 @@
 
     <div class="signature-section">
       <div class="signature-box">
-        <p>Tanda Tangan Pemilik</p>
         @if($signatureData)
           <img src="{{ $signatureData }}" alt="Tanda Tangan Pemilik" class="signature-image" />
         @else

@@ -253,11 +253,12 @@
 
     .footer {
       border-top: 1px solid #e5e5e5;
-      margin-top: 15px;
-      padding-top: 10px;
+      margin-top: 8px;
+      padding-top: 8px;
       text-align: center;
       font-size: 9px;
       color: #999;
+      page-break-inside: avoid;
     }
 
     .footer p {
@@ -265,9 +266,10 @@
     }
 
     .signature-section {
-      margin: 30px 0 15px;
+      margin: 18px 0 8px;
       display: flex;
       justify-content: flex-end;
+      page-break-inside: avoid;
     }
 
     .signature-box {
@@ -469,7 +471,6 @@
 
     <div class="signature-section">
       <div class="signature-box">
-        <p>Tanda Tangan Pemilik</p>
         @if($signatureData)
           <img src="{{ $signatureData }}" alt="Tanda Tangan Pemilik" class="signature-image" />
         @else
