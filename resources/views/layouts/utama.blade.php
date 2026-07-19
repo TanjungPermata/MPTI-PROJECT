@@ -489,46 +489,331 @@
       .rating-summary>div:first-child{border-right:none;padding-right:0;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:1rem}
       .section-header-row{flex-direction:column;align-items:flex-start}
     }
-    @media(max-width:768px){
-      .hero-left{padding:2rem 1rem}
-      h1{font-size:1.75rem}
-      .hero-sub{font-size:.98rem}
-      .hero-right{padding:2rem 0}
-      .hero-expertise-card{padding:1.25rem}
-      .expertise-grid{gap:.75rem}
-      .stats-row{flex-wrap:nowrap;overflow-x:auto;padding-bottom:1rem;scrollbar-width:none;-ms-overflow-style:none}
-      .stats-row::-webkit-scrollbar{display:none}
-      .stat-item{min-width:200px}
-      .stat-divider{display:none}
-      .hero-badge{white-space:normal;max-width:260px;padding:6px 10px}
-      .facilities-grid{grid-template-columns:1fr}
-      .kost-gallery-grid{grid-template-columns:1fr;grid-template-rows:auto;gap:1rem}
-      .kost-gallery-grid > div{border-radius:8px;overflow:hidden}
-      .services-grid{grid-template-columns:1fr}
-      .stats-grid{grid-template-columns:1fr}
-      .calc-grid{grid-template-columns:1fr}
-      .included-grid{grid-template-columns:1fr}
-      .contact-info-row{grid-template-columns:1fr}
-      .rating-summary{flex-direction:column;gap:1rem}
-      .rating-summary>div:first-child{width:100%;border-right:none;padding-right:0;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:1rem}
-      .rating-bars{padding-left:0}
-      .reviews-scroll{padding-bottom:1rem}
-      .reviews-track{gap:1rem}
-      .review-card{min-width:calc(100vw - 2rem);flex:0 0 calc(100vw - 2rem)}
-      .carousel-arrow{width:34px;height:34px}
-      .carousel-dot{width:7px;height:7px}
-      .nav-links{top:64px;padding:1rem;gap:.75rem;}
-      .nav-links a{font-size:.95rem}
-      .nav-links .nav-cta{width:100%;text-align:center}
-      .btn-gold,.avail-btn,.wa-btn,.modal-btn,.admin-save-btn{width:100%;display:flex;justify-content:center}
-      .admin-panel{width:100vw;left:0;right:0;top:64px;border-radius:0;max-width:none;margin:0}
-      .admin-panel-header{padding:.85rem 1rem}
-      .admin-panel-body{padding:1rem;max-height:75vh}
-      .admin-panel-title{font-size:.9rem;gap:.4rem}
-      .admin-panel-body button,.admin-panel-body .admin-qty-btn{font-size:.8rem}
-      .modal-box{max-width:100%;margin:.5rem}
-      section{padding:2rem 1rem}
+    
+  @media (max-width: 768px) {
+
+    html,
+    body {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
     }
+
+    /* NAVBAR */
+    nav {
+      padding: 0 1rem;
+    }
+
+    .nav-links {
+      display: none;
+      position: absolute;
+      top: 64px;
+      left: 0;
+      right: 0;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding: 1rem;
+      background: var(--nav-bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      animation: slideDown 0.25s ease forwards;
+    }
+
+    .nav-links.open {
+      display: flex;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+    }
+
+    .nav-links .nav-cta {
+      width: 100%;
+      text-align: center;
+    }
+
+    .hamburger {
+      display: flex;
+    }
+
+    /* HERO */
+    .hero {
+      width: 100%;
+      min-height: auto;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .hero > *,
+    .hero-left,
+    .hero-right {
+      width: 100%;
+      min-width: 0;
+    }
+
+    .hero-left {
+      padding: 2rem 1rem 1.5rem;
+
+      /* Menghapus posisi desktop */
+      transform: none;
+    }
+
+    .hero-right {
+      padding: 0 1rem 2rem;
+
+      /* Menghapus posisi desktop */
+      transform: none;
+    }
+
+    .hero h1 {
+      max-width: 100%;
+      font-size: clamp(1.75rem, 8vw, 2.2rem);
+      line-height: 1.15;
+      overflow-wrap: anywhere;
+      word-break: normal;
+    }
+
+    .hero-sub {
+      width: 100%;
+      max-width: 100%;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .hero-sub-wrap {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-desc-deco {
+      margin-top: 0.3rem;
+    }
+
+    .hero-badge {
+      max-width: 100%;
+      white-space: normal;
+      padding: 6px 10px;
+    }
+
+    /* TOMBOL HERO */
+    .hero-btns {
+      display: grid;
+      grid-template-columns: 1fr;
+      width: 100%;
+      gap: 0.75rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-btns a,
+    .hero-btns button,
+    .hero-btns .btn-gold {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* FOTO HERO */
+    .hero-photo-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 0.75rem;
+    }
+
+    .hero-photo-large,
+    .hero-photo-small {
+      grid-row: auto;
+      min-height: 220px;
+    }
+
+    /* KARTU KEAHLIAN */
+    .expertise-grid {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .hero-expertise-card {
+      width: 100%;
+      padding: 1.25rem;
+    }
+
+    /* STATISTIK HERO */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      width: 100%;
+      gap: 0.75rem;
+      overflow: visible;
+      padding-bottom: 0;
+    }
+
+    .stat-item {
+      width: 100%;
+      min-width: 0;
+      padding: 1rem 0.5rem;
+    }
+
+    .stat-divider {
+      display: none;
+    }
+
+    /* GRID BAGIAN LAIN */
+    .services-grid,
+    .stats-grid,
+    .calc-grid,
+    .kost-grid,
+    .facilities-grid,
+    .included-grid,
+    .contact-info-row,
+    .dual-map-wrap,
+    .advantages-grid {
+      grid-template-columns: 1fr;
+    }
+
+    /* GALERI KOST */
+    .kost-gallery-grid {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto;
+      gap: 1rem;
+    }
+
+    .kost-gallery-grid > div {
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    /* ULASAN */
+    .rating-summary {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .rating-summary > div:first-child {
+      width: 100%;
+      padding-right: 0;
+      padding-bottom: 1rem;
+      border-right: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .rating-bars {
+      padding-left: 0;
+    }
+
+    .reviews-scroll {
+      padding-bottom: 1rem;
+    }
+
+    .reviews-track {
+      gap: 1rem;
+    }
+
+    .review-card {
+      min-width: calc(100vw - 2rem);
+      flex: 0 0 calc(100vw - 2rem);
+    }
+
+    .carousel-arrow {
+      width: 34px;
+      height: 34px;
+    }
+
+    .carousel-dot {
+      width: 7px;
+      height: 7px;
+    }
+
+    /* FORM DAN TOMBOL */
+    .btn-gold,
+    .avail-btn,
+    .wa-btn,
+    .modal-btn,
+    .admin-save-btn {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* ADMIN PANEL */
+    .admin-panel {
+      width: 100vw;
+      max-width: none;
+      top: 64px;
+      left: 0;
+      right: 0;
+      margin: 0;
+      border-radius: 0;
+    }
+
+    .admin-panel-header {
+      padding: 0.85rem 1rem;
+    }
+
+    .admin-panel-body {
+      max-height: 75vh;
+      padding: 1rem;
+    }
+
+    .admin-panel-title {
+      gap: 0.4rem;
+      font-size: 0.9rem;
+    }
+
+    .admin-panel-body button,
+    .admin-panel-body .admin-qty-btn {
+      font-size: 0.8rem;
+    }
+
+    .modal-box {
+      max-width: 100%;
+      margin: 0.5rem;
+    }
+
+    /* BAGIAN UMUM */
+    section {
+      padding: 2.5rem 1rem;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* TOMBOL WHATSAPP MELAYANG */
+    .wa-float {
+      right: 14px;
+      bottom: 14px;
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  /* HP sangat kecil */
+  @media (max-width: 380px) {
+
+    .stats-row {
+      grid-template-columns: 1fr;
+    }
+
+    .logo {
+      font-size: 1.05rem;
+      letter-spacing: 1px;
+    }
+
+    .hero h1 {
+      font-size: 1.65rem;
+    }
+
+    .hero-left {
+      padding-left: 0.85rem;
+      padding-right: 0.85rem;
+    }
+
+    .hero-right {
+      padding-left: 0.85rem;
+      padding-right: 0.85rem;
+    }
+  }
   </style>
 </head>
 <body>
